@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-md-3 card">
+      <label> Questions: </label>
+      <div class="row">
+        <button type="button" *ngFor="let question of questions" [ngClass]="question.id === selectedQuestion.id ? 'btn-primary' : 'btn-info'" (click)="selectQuestion(question)" class="btn btn-circle btn-lg"><span>{{question.id}}</span></button>
+      </div>
+      <div class="row">
+        <label> Answered: </label>
+        <br>
+        <div *ngIf="answered; else templateanswered">
+           <!-- <button type="button" *ngFor="let question of questions" [ngClass]="question.id === selectedQuestion.id ? 'btn-primary' : 'btn-info'" (click)="selectQuestion(question)" class="btn btn-circle btn-lg"><span>{{question.id}}</span></button> -->
+        </div>
+        <ng-template #templateanswered>
+           <p>None</p> 
+        </ng-template>
+      </div>
+      <div class="row">
+          <label> Unanswered: </label>
+          <br>
+          <div *ngIf="unanswered; else tmpUnanswered">
+             <button type="button" *ngFor="let unque of unanswered" (click)="selectQuestion(question)" class="btn btn-info btn-circle btn-lg"><span>{{question.id}}</span></button>
+          </div>
+          <ng-template #tmpUnanswered>
+             <p>None</p> 
+          </ng-template>
+        </div>
+  </div>
+  <div class="col-md-6">
+    <div style="margin-bottom:30px;" *ngIf="selectedQuestion?.statment">
+        <h3>{{ selectedQuestion.id }}. {{ selectedQuestion.statment }}</h3>
+    </div>
+    <form role="form">
+      <div *ngIf="selectedQuestion?.options?.length > 0">
+          <div *ngFor="let options of selectedQuestion?.options;  let i = index">
+            <div class="radio"><label><input type="radio" name="quiz" value={{options.option_key}> {{options.option_value}}</label></div>
+          </div>
+        </div>
+      <br>
+      <button type="button" (click)="preQuestion()" class="btn btn-secondary" [disabled]="preQDisabled">PREV</button>
+      <button type="button" (click)="nxtQuestion()" class="btn btn-primary" [disabled]="nxtQDisabled">NEXT</button>
+      <button type="button" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+  <div class="col-md-3">
+  
+  </div>
+</div>
